@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop">
+    <aop:aspectj-autoproxy />
+    <bean id="audience" class="site.zhoush.aop.Audience" />
+
+    <bean id="blankDisc" class="site.zhoush.comps.BlankDisc"
+            p:title="Sgt. Pepper's lonely Hearts Club Band"
+            p:artist="The Beatles">
+        <property name="tracks">
+            <list>
+                <value>Sgt. Pepper's lonely Hearts Club Band</value>
+                <value>With a Little Help from My Friends</value>
+                <value>Lucky in the sky with diamonds</value>
+                <value>Getting Better</value>
+                <value>Fixing a Hole</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 统计播放次数 -->
+    <bean id="trackCounter" class="site.zhoush.aop.TrackCounter"/>
+    <aop:config>
+        <aop:aspect ref="trackCounter">
+            <aop:pointcut id="cp" expression="execution(* site.zhoush.comps.CompactDisc.play(int)) and args(trackNumber)" />
+            <aop:before method="countTrack" pointcut-ref="cp" arg-names="trackNumber" />
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="defaultEncoreable" class="site.zhoush.comps.DefaultEncoreable"/>
+
+    <!-- 为接口引入新方法 -->
+    <aop:config>
+        <aop:aspect>
+
+            <!--<aop:declare-parents types-matching="site.zhoush.comps.Performance+"-->
+                                 <!--implement-interface="site.zhoush.comps.Encoreable"-->
+                                 <!--default-impl="site.zhoush.comps.DefaultEncoreable" />-->
+
+            <aop:declare-parents types-matching="site.zhoush.comps.Performance+"
+                                 implement-interface="site.zhoush.comps.Encoreable"
+                                    delegate-ref="defaultEncoreable"/>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="riticismEngineImpl" class="site.zhoush.comps.CriticismEngineImpl">
+        <property name="criticismPool">
+            <list>
+                <value>Worst performance ever!</value>
+                <value>I langhed, I cried, then I realized I was at the wrong show.</value>
+                <value>A must see show!</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="criticismEngineImpl" class="site.zhoush.comps.CriticismEngineImpl"></bean>
+
+    <bean class="site.zhoush.aop.CriticAspect" factory-method="aspectOf">
+        <property name="criticismEngine" ref="criticismEngineImpl" />
+    </bean>
+</beans>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframwork.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util-4.3.2.xsd">
+    <!--<context:component-scan base-package="site.zhoush" />-->
+
+    <!-- JavaConfig 显示装配 -->
+    <bean class="site.zhoush.CDConfig" />
+
+    <!-- 初始化Bean -->
+    <bean id="cdPlayer" class="site.zhoush.CDPlayer" c:compactDisc-ref="compactDisc" />
+</beans>

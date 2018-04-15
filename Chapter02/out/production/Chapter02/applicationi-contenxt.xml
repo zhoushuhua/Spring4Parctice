@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframwork.org/schema/context/spring-context.xsd">
+    <!--<context:component-scan base-package="site.zhoush" />-->
+
+    <!-- 初始化Bean -->
+    <bean id="sgtPeppers" class="site.zhoush.SgtPeppers" />
+    <!-- 初始化并注入bean -->
+    <!--<bean id="cdPlayer" class="site.zhoush.CDPlayer">-->
+        <!--<constructor-arg ref="sgtPeppers"></constructor-arg>-->
+    <!--</bean>-->
+    <!-- C:命名空间的注入方式 -->
+    <!--<bean id="cdPlayer" class="site.zhoush.CDPlayer" c:compactDisc-ref="sgtPeppers"></bean>-->
+    <!--<bean id="cdPlayer" class="site.zhoush.CDPlayer" c:_0-ref="sgtPeppers"></bean>-->
+    <bean id="cdPlayer" class="site.zhoush.CDPlayer" c:_-ref="sgtPeppers"></bean>
+
+    <!-- 构造函数注入字面量值 -->
+    <!--<bean id="blankDisc" class="site.zhoush.BlankDisc">-->
+        <!--<constructor-arg value="Sgt. Pepper's Lonely Hearts Club Band" />-->
+        <!--<constructor-arg value="The Beatles"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="blankDisc" class="site.zhoush.BlankDisc"-->
+        <!--c:title="Sgt. Pepper's Lonely Hearts Club Band" c:artist="The Beatles"/>-->
+    <!--<bean id="blankDisc" class="site.zhoush.BlankDisc"-->
+          <!--c:_0="Sgt. Pepper's Lonely Hearts Club Band" c:_1="The Beatles"/>-->
+    <bean id="blankDisc" class="site.zhoush.BlankDisc" c:_="Sgt. Pepper's Lonely Hearts Club Band"/>
+</beans>

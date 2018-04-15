@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframwork.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util-4.3.2.xsd">
+    <!--<context:component-scan base-package="site.zhoush" />-->
+
+    <!-- 初始化Bean -->
+    <bean id="sgtPeppers" class="site.zhoush.SgtPeppers" />
+    <!-- 初始化并注入bean -->
+    <!--<bean id="cdPlayer" class="site.zhoush.CDPlayer">-->
+        <!--<constructor-arg ref="sgtPeppers"></constructor-arg>-->
+    <!--</bean>-->
+    <!-- C:命名空间的注入方式 -->
+    <!--<bean id="cdPlayer" class="site.zhoush.CDPlayer" c:compactDisc-ref="sgtPeppers"></bean>-->
+    <!--<bean id="cdPlayer" class="site.zhoush.CDPlayer" c:_0-ref="sgtPeppers"></bean>-->
+    <!--<bean id="cdPlayer" class="site.zhoush.CDPlayer" c:_-ref="sgtPeppers"></bean>-->
+
+    <!-- 构造函数注入字面量值 -->
+    <!--<bean id="blankDisc" class="site.zhoush.BlankDisc">-->
+        <!--<constructor-arg value="Sgt. Pepper's Lonely Hearts Club Band" />-->
+        <!--<constructor-arg value="The Beatles"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="blankDisc" class="site.zhoush.BlankDisc"-->
+        <!--c:title="Sgt. Pepper's Lonely Hearts Club Band" c:artist="The Beatles"/>-->
+    <!--<bean id="blankDisc" class="site.zhoush.BlankDisc"-->
+          <!--c:_0="Sgt. Pepper's Lonely Hearts Club Band" c:_1="The Beatles"/>-->
+    <!--<bean id="blankDisc" class="site.zhoush.BlankDisc" c:_="Sgt. Pepper's Lonely Hearts Club Band"/>-->
+
+    <!-- 装配Null值 -->
+    <!--<bean id="blankDisc" class="site.zhoush.BlankDisc">-->
+        <!--<constructor-arg value="Sgt. Pepper's Lonely Hearts Club Band" />-->
+        <!--<constructor-arg value="The Beatles"/>-->
+        <!--<constructor-arg><null/></constructor-arg>-->
+    <!--</bean>-->
+
+    <!-- 装配一个集合 -->
+    <!--<bean id="blankDisc" class="site.zhoush.BlankDisc">-->
+        <!--<constructor-arg value="Sgt. Pepper's Lonely Hearts Club Band" />-->
+        <!--<constructor-arg value="The Beatles"/>-->
+        <!--<constructor-arg>-->
+            <!--<list>-->
+                <!--<value>Sgt. Pepper's Lonely Hearts Club Band</value>-->
+                <!--<value>With a Little Help for My Friends</value>-->
+                <!--<value>Lucy in the sky with Diamonds</value>-->
+                <!--<value>Getting Better</value>-->
+                <!--<value>Fixing a Hole</value>-->
+            <!--</list>-->
+        <!--</constructor-arg>-->
+    <!--</bean>-->
+
+    <!-- Setter的方式装配 -->
+    <!--<bean id="blankDisc001" class="site.zhoush.BlankDisc001">-->
+        <!--<property name="title" value="Sgt. Pepper's Lonely Hearts Club Band" />-->
+        <!--<property name="artist" value="The Beatles" />-->
+        <!--<property name="tracks">-->
+            <!--<list>-->
+                <!--<value>Sgt. Pepper's Lonely Hearts Club Band</value>-->
+                <!--<value>With a Little Help for My Friends</value>-->
+                <!--<value>Lucy in the sky with Diamonds</value>-->
+                <!--<value>Getting Better</value>-->
+                <!--<value>Fixing a Hole</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <util:list id="tracks-list">
+        <value>Sgt. Pepper's Lonely Hearts Club Band</value>
+        <value>With a Little Help for My Friends</value>
+        <value>Lucy in the sky with Diamonds</value>
+        <value>Getting Better</value>
+        <value>Fixing a Hole</value>
+    </util:list>
+
+    <bean id="blankDisc001" class="site.zhoush.BlankDisc001" p:title="Sgt. Pepper's Lonely Hearts Club Band" p:artist="The Beatles" p:tracks-ref="tracks-list" />
+
+    <!-- Setter装配信息 -->
+    <!--<bean id="cdPlayer001" class="site.zhoush.CDPlayer001">-->
+        <!--<property name="compactDisc" ref="blankDisc" />-->
+    <!--</bean>-->
+
+    <!-- Setter装配信息 -->
+    <!--<bean id="cdPlayer001" class="site.zhoush.CDPlayer001" p:compactDisc-ref="blankDisc"/>-->
+    <!--<bean id="cdPlayer001" class="site.zhoush.CDPlayer001" p:compactDisc-ref="blankDisc"/>-->
+    <!--<bean id="cdPlayer001" class="site.zhoush.CDPlayer001" p:_0-ref="blankDisc"/>-->
+    <!-- 装配CDPlayer -->
+    <bean id="cdPlayer001" class="site.zhoush.CDPlayer001" p:compactDisc-ref="blankDisc001"/>
+</beans>
