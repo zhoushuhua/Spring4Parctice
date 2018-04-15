@@ -30,6 +30,8 @@
       <root url="jar://$PROJECT_DIR$/lib/spring-tx-4.3.16.RELEASE.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/system-rules-1.17.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/mockito-core-2.3.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jstl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/standard.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

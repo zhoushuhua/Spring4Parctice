@@ -8,5 +8,6 @@ import java.util.List;
  * Created by zhoush on 2018/4/15.
  */
 public interface SpittleRepository {
-    public List<Spittle> findSpittles(long max, int count);
+    List<Spittle> findSpittles(long max, int count);
+    Spittle findOne(long spittle_id);
 }
