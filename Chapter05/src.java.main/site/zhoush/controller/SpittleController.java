@@ -31,7 +31,7 @@ public class SpittleController {
             @RequestParam(value = "max", defaultValue = "0") Integer max,
             @RequestParam("count") Integer count,
             Model model) {
-        model.addAttribute(spittleRepository.findSpittles(max, count));
+        model.addAttribute("spittleList", spittleRepository.findSpittles(max, count));
         return "spittles";
     }
 
