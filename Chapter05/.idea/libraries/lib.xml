@@ -32,6 +32,7 @@
       <root url="jar://$PROJECT_DIR$/lib/servlet-api.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/mockito-all-2.0.2-beta.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/mockito-core-2.18.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/validation-api-1.0.0.GA.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -3,12 +3,15 @@ package site.zhoush.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import site.zhoush.dao.SpittleRepository;
-import site.zhoush.domain.Spittle;
+import site.zhoush.domain.Spittler;
+
+import javax.validation.Valid;
 
 /**
  * Created by zhoush on 2018/4/15.
@@ -48,5 +51,24 @@ public class SpittleController {
         return "registerForm";
     }
 
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String postRegistrationForm(Model model, @Valid Spittler spittler, Errors errors) {
 
+        if(errors.hasErrors()) {
+            return "registerForm";
+        }
+
+        // 保存数据
+        this.spittleRepository.save(spittler);
+        // 添加渲染数据
+        model.addAttribute("spittler", spittler);
+        return "redirect:/spittle/" + spittler.getUsername();
+    }
+
+    @RequestMapping(value = "/spittler/{username}", method=RequestMethod.GET)
+    public String showSpittlerProfile(@PathVariable(value = "username") String username, Model model) {
+        Spittler spittler = this.spittleRepository.findByUesrName(username);
+        model.addAttribute(spittler);
+        return "profile";
+    }
 }

@@ -5,6 +5,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceView;
 import site.zhoush.dao.SpittleRepository;
 import site.zhoush.domain.Spittle;
+import site.zhoush.domain.Spittler;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -90,5 +91,45 @@ public class SpittleControllerTest {
 
         mockMvc.perform(get("/spittle/register"))
                 .andExpect(view().name("registerForm"));
+    }
+
+    @Test
+    public void testPostRegistration() throws Exception {
+        SpittleRepository spittleRepository = mock(SpittleRepository.class);
+        Spittler unsaveed = new Spittler("jbauer", "24hours", "jack", "bauer");
+        Spittler saved = new Spittler(24L, "jbauer", "24hours", "jack", "bauer");
+        when(spittleRepository.save(unsaveed)).thenReturn(saved);
+
+        SpittleController spittleController = new SpittleController(spittleRepository);
+        MockMvc mockMvc = standaloneSetup(spittleController).build();
+
+        mockMvc.perform(post("/spittle/register")
+                .param("firstName", "jbauer")
+                .param("lastName", "24hours")
+                .param("username", "jack")
+                .param("password", "bauer"))
+                .andExpect(redirectedUrl("/spittle/jack"))
+                .andExpect(model().attributeExists("spittler"));
+//                .andExpect(model().attribute("spittler", saved));
+
+//        verify(spittleRepository, atLeastOnce()).save(unsaveed);
+    }
+
+    @Test
+    public void testShowSpittlerProfile() throws Exception {
+
+        Spittler spittler = new Spittler("test00", "test01", "test02", "123456");
+        SpittleRepository spittleRepository = mock(SpittleRepository.class);
+        when(spittleRepository.findByUesrName("test02")).thenReturn(spittler);
+
+        SpittleController spittleController = new SpittleController(spittleRepository);
+
+
+        MockMvc mockMvc = standaloneSetup(spittleController).build();
+
+        mockMvc.perform(get("/spittle/spittler/test02"))
+                .andExpect(view().name("profile"))
+                .andExpect(model().attributeExists("spittler"))
+                .andExpect(model().attribute("spittler", spittler));
     }
 }
